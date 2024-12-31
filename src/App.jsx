@@ -1,4 +1,5 @@
 import './App.css';
+import AdComponent from './components/AdComponent';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Paste from './components/Paste';
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div>
+      <AdComponent/>
       <RouterProvider router={router} />
     </div>
   );
