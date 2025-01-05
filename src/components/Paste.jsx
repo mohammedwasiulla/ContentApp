@@ -19,16 +19,47 @@ const Paste = () => {
 
   function handleDelete(pasteId) {
     dispatch(removeFromPastes({ id: pasteId }));
-    toast.success("Paste Deleted Successfully");
+    toast.success('Paste Deleted Successfully');
   }
 
   const handleShare = (paste) => {
     const doc = new jsPDF();
-    doc.text(`Title: ${paste.title}`, 10, 10);
-    doc.text(`Content: ${paste.content}`, 10, 20);
-    doc.text(`Date: ${today}`, 10, 30);
+    const pageHeight = doc.internal.pageSize.height;
+    const margin = 10;
+    const lineHeight = 10;
+    let cursorY = margin;
+
+    // Title
+    doc.setFontSize(14);
+    doc.text(`Title: ${paste.title}`, margin, cursorY);
+    cursorY += lineHeight;
+
+    // Content
+    doc.setFontSize(12);
+    const splitContent = doc.splitTextToSize(
+      paste.content,
+      doc.internal.pageSize.width - 2 * margin
+    );
+
+    splitContent.forEach((line) => {
+      if (cursorY + lineHeight > pageHeight - margin) {
+        doc.addPage();
+        cursorY = margin;
+      }
+      doc.text(line, margin, cursorY);
+      cursorY += lineHeight;
+    });
+
+    // Date
+    if (cursorY + lineHeight > pageHeight - margin) {
+      doc.addPage();
+      cursorY = margin;
+    }
+    doc.text(`Date: ${today}`, margin, cursorY);
+
+    // Save the PDF
     doc.save(`${paste.title}.pdf`);
-    toast.success("PDF Created and Ready to Share");
+    toast.success('PDF Created and Ready to Share');
   };
 
   const handleView = (pasteId) => {
@@ -86,7 +117,7 @@ const Paste = () => {
                     className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
                     onClick={() => {
                       navigator.clipboard.writeText(paste?.content);
-                      toast.success("Copied to clipboard");
+                      toast.success('Copied to clipboard');
                     }}
                   >
                     Copy
