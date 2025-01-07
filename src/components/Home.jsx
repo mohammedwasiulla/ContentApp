@@ -39,12 +39,12 @@ const Home = () => {
 
   return (
     <div
-      className="h-screen w-screen flex items-center justify-center bg-cover bg-center"
+      className="h-screen w-screen flex flex-col items-center justify-center bg-cover bg-center"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080')`, // Replace with your desired 3D image URL
+        backgroundImage: `url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080')`,
       }}
     >
-      <div className="bg-white bg-opacity-90 shadow-2xl rounded-2xl w-full h-full p-8 flex flex-col justify-center">
+      <div className="bg-white bg-opacity-90 shadow-4xl rounded-2xl w-full h-full p-8 flex flex-col justify-center">
         <h1 className="text-4xl font-bold text-center mb-8 text-purple-700">
           {pasteId ? "Update Your Paste" : "Create a New Paste"}
         </h1>
@@ -69,6 +69,19 @@ const Home = () => {
           >
             {pasteId ? "Update Paste" : "Create Paste"}
           </button>
+        </div>
+        {/* Footer Section */}
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <img
+            src="/images/wasi.jpeg" // Reference the image in the public folder
+            alt="Mohammed Wasiullah"
+            className="w-20 h-20 rounded-full shadow-lg"
+          />
+          <div className="text-center">
+            <p className="text-lg font-semibold text-gray-700">Developed by</p>
+            <p className="text-xl font-bold text-purple-700">Mohammed Wasiullah</p>
+            <p className="text-xl font-bold text-purple-700">Web Developer</p>
+          </div>
         </div>
       </div>
     </div>
