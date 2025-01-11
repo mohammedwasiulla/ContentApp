@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import { addToPastes, updateToPastes } from '../redux/pasteSlice';
 
 const Home = () => {
   const [title, setTitle] = useState('');
   const [value, setValue] = useState('');
+  const [showInstructions, setShowInstructions] = useState(true); // State for modal visibility
   const [searchParams, setSearchParams] = useSearchParams();
   const pasteId = searchParams.get("pasteId");
   const dispatch = useDispatch();
@@ -44,6 +45,33 @@ const Home = () => {
         backgroundImage: `url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080')`,
       }}
     >
+      {/* Instructional Modal */}
+      {showInstructions && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-lg w-full">
+            <h2 className="text-2xl font-bold text-purple-700 mb-4">
+              Welcome to the App!
+            </h2>
+            <p className="text-gray-700 mb-4">
+              Here’s how to use the app:
+            </p>
+            <ul className="list-disc list-inside text-gray-600 mb-4">
+              <li>Enter a title for your paste in the input box.</li>
+              <li>Write your content in the textarea below.</li>
+              <li>Click "Create Paste" to save it.</li>
+              <li>To edit an existing paste, click on it and make changes.</li>
+              <li>You can also update,view,delete and on share click it converts to pdf.</li>
+            </ul>
+            <button
+              onClick={() => setShowInstructions(false)}
+              className="bg-purple-600 text-white font-semibold py-2 px-4 rounded hover:bg-purple-700"
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white bg-opacity-90 shadow-4xl rounded-2xl w-full h-full p-8 flex flex-col justify-center">
         <h1 className="text-4xl font-bold text-center mb-8 text-purple-700">
           {pasteId ? "Update Your Paste" : "Create a New Paste"}
@@ -73,14 +101,13 @@ const Home = () => {
         {/* Footer Section */}
         <div className="mt-8 flex items-center justify-center gap-4">
           <img
-            src="/images/wasi.jpeg" // Reference the image in the public folder
+            src="/images/wasi.jpeg"
             alt="Mohammed Wasiullah"
             className="w-20 h-20 rounded-full shadow-lg"
           />
           <div className="text-center">
             <p className="text-lg font-semibold text-gray-700">Developed by</p>
             <p className="text-xl font-bold text-purple-700">Mohammed Wasiullah</p>
-            <p className="text-xl font-bold text-purple-700">Web Developer</p>
           </div>
         </div>
       </div>
