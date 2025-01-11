@@ -59,7 +59,7 @@ const Home = () => {
               <li>Enter a title for your paste in the input box.</li>
               <li>Write your content in the textarea below.</li>
               <li>Click "Create Paste" to save it.</li>
-              <li>To edit an existing paste, click on it and make changes.</li>
+              <li>Then go to pastes section for further changes.</li>
               <li>You can also update,view,delete and on share click it converts to pdf.</li>
             </ul>
             <button
