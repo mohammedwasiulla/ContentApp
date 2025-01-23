@@ -1,22 +1,25 @@
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import AdComponent from './AdComponent';
 
-const AdComponent = () => {
+const AppWithAd = ({ children }) => {
+    const [showAd, setShowAd] = useState(true);
+
     useEffect(() => {
-        try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-            console.error(e);
-        }
+        const timer = setTimeout(() => setShowAd(false), 5000); // Show ad for 5 seconds
+        return () => clearTimeout(timer);
     }, []);
 
     return (
-        <ins className="adsbygoogle"
-             style={{ display: "block" }}
-             data-ad-client="ca-pub-9658645973102544"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
+        <div>
+            {showAd ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-white flex items-center justify-center">
+                    <AdComponent />
+                </div>
+            ) : (
+                children
+            )}
+        </div>
     );
 };
 
-export default AdComponent;
+export default AppWithAd;
